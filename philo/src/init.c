@@ -6,22 +6,23 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 16:15:25 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/20 20:59:45 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/20 21:19:47 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 #include <stdlib.h>
 #include "philo.h"
+#include <stdio.h>
 
 static void	set_info(t_info *info, int argc, char **argv)
 {
-	info->philo_count = ft_atoi(argv[1]);
-	info->time_to_die = ft_atoi(argv[2]);
-	info->time_to_eat = ft_atoi(argv[3]);
-	info->time_to_sleep = ft_atoi(argv[4]);
+	info->philo_count = ft_atoi(info, argv[1]);
+	info->time_to_die = ft_atoi(info, argv[2]);
+	info->time_to_eat = ft_atoi(info, argv[3]);
+	info->time_to_sleep = ft_atoi(info, argv[4]);
 	if (argc == 6)
-		info->must_eat_count = ft_atoi(argv[5]);
+		info->must_eat_count = ft_atoi(info, argv[5]);
 }
 
 static t_status	check_info(t_info *info, int argc)
@@ -53,6 +54,8 @@ static void	init_philo(t_info *info, int argc)
 t_status	init(t_info *info, int argc, char **argv)
 {
 	set_info(info, argc, argv);
+	if (info->error)
+		return (error);
 	if (check_info(info, argc) == error)
 		return (error);
 	info->philo = (t_philo *)malloc(sizeof(t_philo) * info->philo_count);

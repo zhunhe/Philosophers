@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/20 21:01:06 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/20 21:03:28 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_philo
 
 typedef struct s_info
 {
+	bool		error;
 	int			philo_count;
 	int			time_to_die;
 	int			time_to_eat;
@@ -49,5 +50,5 @@ t_status	init(t_info *info, int argc, char **argv);
 /*
 ** util.c
 */
-int			ft_atoi(const char *s);
+int			ft_atoi(t_info *info, const char *s);
 #endif
