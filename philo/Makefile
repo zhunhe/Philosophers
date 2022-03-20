@@ -6,7 +6,7 @@
 #    By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/08 14:17:22 by juhur             #+#    #+#              #
-#    Updated: 2022/03/08 16:22:19 by juhur            ###   ########.fr        #
+#    Updated: 2022/03/20 17:22:51 by juhur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC_DIR = ./src
 SRCS = $(addprefix $(SRC_DIR)/, \
 	main.c \
 	util.c \
+	init.c \
 )
 
 INC_DIR = ./include
