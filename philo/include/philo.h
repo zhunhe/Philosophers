@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/20 21:03:28 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/21 16:53:48 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@
 # include <stdbool.h>
 
 typedef pthread_mutex_t	t_mutex;
+typedef struct s_info	t_info;
 
 typedef struct s_philo
 {
 	pthread_t	tid;
+	int			order;
 	int			remain_eat_count;
+	t_mutex		*left_fork;
+	t_mutex		*right_fork;
+	t_info		*info;
 }	t_philo;
 
 typedef struct s_info
