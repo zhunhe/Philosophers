@@ -6,11 +6,13 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:09:29 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/20 21:16:35 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/21 18:17:19 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
+#include <sys/time.h>
+#include <unistd.h>
 #include "philo.h"
 
 int	ft_atoi(t_info *info, const char *s)
@@ -37,4 +39,18 @@ int	ft_atoi(t_info *info, const char *s)
 		num = 10 * num + *(s++) - '0';
 	}
 	return (sign * num);
+}
+
+long long	get_cur_time(void)
+{
+	struct timeval	t;
+
+	if (gettimeofday(&t, NULL) == -1)
+		return (-1);
+	return ((long long)t.tv_sec * MILLISEC + t.tv_usec / MILLISEC);
+}
+
+long long	get_elapsed_time(t_info *info)
+{
+	return (get_cur_time() - info->start_time);
 }
