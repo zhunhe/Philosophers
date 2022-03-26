@@ -6,10 +6,11 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:09:29 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/21 18:17:19 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/26 16:27:24 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdint.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -53,4 +54,10 @@ long long	get_cur_time(void)
 long long	get_elapsed_time(t_info *info)
 {
 	return (get_cur_time() - info->start_time);
+}
+
+void	print_action(t_info *info, char *action, int philo)
+{
+	if (!info->end)
+		printf(action, get_elapsed_time(info), philo);
 }

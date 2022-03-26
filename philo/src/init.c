@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 16:15:25 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/21 18:19:14 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/26 22:20:04 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static void	set_info(t_info *info, int argc, char **argv)
 {
 	info->philo_count = ft_atoi(info, argv[1]);
-	info->time_to_die = ft_atoi(info, argv[2]) * MILLISEC;
-	info->time_to_eat = ft_atoi(info, argv[3]) * MILLISEC;
-	info->time_to_sleep = ft_atoi(info, argv[4]) * MILLISEC;
+	info->time_to_die = ft_atoi(info, argv[2]);
+	info->time_to_eat = ft_atoi(info, argv[3]);
+	info->time_to_sleep = ft_atoi(info, argv[4]);
 	if (argc == 6)
 		info->must_eat_count = ft_atoi(info, argv[5]);
 }
@@ -51,13 +51,12 @@ static void	init_philo(t_info *info)
 		info->philo[i].right_fork = &info->fork[(i + 1) % info->philo_count];
 		info->philo[i].info = info;
 		pthread_create(&info->philo[i].tid, NULL, routine, (void *)&info->philo[i]);
+		pthread_detach(info->philo[i].tid);
 	}
 }
 
 t_status	init(t_info *info, int argc, char **argv)
 {
-	void	*ret;
-	
 	set_info(info, argc, argv);
 	if (info->error)
 		return (error);
@@ -68,12 +67,10 @@ t_status	init(t_info *info, int argc, char **argv)
 	if (info->philo == NULL || info->fork == NULL)
 		return (error);
 	info->start_time = get_cur_time();
-	init_philo(info);
 	for (int i = 0; i < info->philo_count; i++)
 		pthread_mutex_init(&info->fork[i], NULL);
-	for (int i = 0; i < info->philo_count; i++)
-		pthread_join(info->philo[i].tid, &ret);
-	for (int i = 0; i < info->philo_count; i++)
-		pthread_mutex_destroy(&info->fork[i]);
+	pthread_create(&info->monitor, NULL, check_alive, (void *)info);
+	pthread_detach(info->monitor);
+	init_philo(info);
 	return (ok);
 }

@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/21 18:24:42 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/25 17:42:47 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_philo
 	pthread_t	tid;
 	int			order;
 	int			remain_eat_count;
+	long long	last_meal_time;
 	t_mutex		*left_fork;
 	t_mutex		*right_fork;
 	t_info		*info;
@@ -32,6 +33,7 @@ typedef struct s_philo
 typedef struct s_info
 {
 	bool		error;
+	bool		end;
 	long long	start_time;
 	int			philo_count;
 	int			time_to_die;
@@ -40,6 +42,7 @@ typedef struct s_info
 	int			must_eat_count;
 	t_philo		*philo;
 	t_mutex		*fork;
+	pthread_t	monitor;
 }	t_info;
 
 typedef enum e_status
@@ -55,6 +58,7 @@ typedef enum e_status
 # define EATING			"%lld	%d	is eating\n"
 # define SLEEPING		"%lld	%d	is sleeping\n"
 # define THINKING		"%lld	%d	is thinking\n"
+# define DIED			"%lld	%d	is died\n"
 
 /*
 ** init.c
@@ -66,8 +70,13 @@ t_status	init(t_info *info, int argc, char **argv);
 int			ft_atoi(t_info *info, const char *s);
 long long	get_cur_time(void);
 long long	get_elapsed_time(t_info *info);
+void		print_action(t_info *info, char *action, int philo);
 /*
 ** philo.c
 */
 void		*routine(void *arg);
+/*
+** monitor.c
+*/
+void		*check_alive(void *arg);
 #endif

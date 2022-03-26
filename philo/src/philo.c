@@ -6,41 +6,49 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:23:11 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/21 18:25:04 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/26 22:32:08 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include "philo.h"
 
+static void	eating(t_philo *p)
+{
+	pthread_mutex_lock(p->left_fork);
+	print_action(p->info, TAKEN_A_FORK, p->order);
+	pthread_mutex_lock(p->right_fork);
+	print_action(p->info, TAKEN_A_FORK, p->order);
+	p->last_meal_time = get_elapsed_time(p->info);
+	print_action(p->info, EATING, p->order);
+	usleep(p->info->time_to_eat * MILLISEC);
+	pthread_mutex_unlock(p->left_fork);
+	pthread_mutex_unlock(p->right_fork);
+}
+
+static void	sleeping(t_philo *p)
+{
+	print_action(p->info, SLEEPING, p->order);
+	p->last_meal_time = get_elapsed_time(p->info);
+	usleep(p->info->time_to_sleep * MILLISEC);
+}
+
+static void	thinking(t_philo *p)
+{
+	print_action(p->info, THINKING, p->order);
+}
+
 void	*routine(void *arg)
 {
-	const t_philo	*p = (t_philo *)arg;
+	t_philo	*p = (t_philo *)arg;
 
-	while (1)
+	if (p->order % 2 == 0)
+		usleep(p->info->time_to_eat * MILLISEC);
+	while (!p->info->end)
 	{
-		if (p->order == 1)
-		{
-			pthread_mutex_lock(p->left_fork);
-			printf(TAKEN_A_FORK, get_elapsed_time(p->info), p->order);
-			pthread_mutex_lock(p->right_fork);
-			printf(TAKEN_A_FORK, get_elapsed_time(p->info), p->order);
-		}
-		else
-		{
-			pthread_mutex_lock(p->right_fork);
-			printf(TAKEN_A_FORK, get_elapsed_time(p->info), p->order);
-			pthread_mutex_lock(p->left_fork);
-			printf(TAKEN_A_FORK, get_elapsed_time(p->info), p->order);
-		}
-		printf(EATING, get_elapsed_time(p->info), p->order);
-		usleep(p->info->time_to_eat);
-		pthread_mutex_unlock(p->left_fork);
-		pthread_mutex_unlock(p->right_fork);
-		printf(SLEEPING, get_elapsed_time(p->info), p->order);
-		usleep(p->info->time_to_sleep);
-		printf(THINKING, get_elapsed_time(p->info), p->order);
+		eating(p);
+		sleeping(p);
+		thinking(p);
 	}
 	return ((void *)&p->order);
 }
