@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 16:15:25 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 20:13:24 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 21:50:57 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,28 @@ static t_status	check_info(t_info *info, int argc)
 
 static void	init_philo(t_info *info)
 {
-	int	i;
+	t_philo	*philo;
+	int		i;
 
 	i = -1;
 	while (++i < info->philo_count)
 	{
-		info->philo[i].order = i + 1;
-		info->philo[i].state = STATE_PHILO_HUNGRY;
-		info->philo[i].remain_eat_count = info->must_eat_count;
-		info->philo[i].left_fork = &info->fork[i];
-		info->philo[i].right_fork = &info->fork[(i + 1) % info->philo_count];
-		info->philo[i].info = info;
-		pthread_create(&info->philo[i].tid, NULL, routine, (void *)&info->philo[i]);
-		pthread_detach(info->philo[i].tid);
+		philo = &info->philo[i];
+		philo->order = i + 1;
+		philo->state = STATE_PHILO_HUNGRY;
+		philo->remain_eat_count = info->must_eat_count;
+		philo->left_fork = &info->fork[i];
+		philo->right_fork = &info->fork[(i + 1) % info->philo_count];
+		philo->info = info;
+		pthread_create(&philo->tid, NULL, routine, (void *)philo);
+		pthread_detach(philo->tid);
 	}
 }
 
 t_status	init(t_info *info, int argc, char **argv)
 {
+	int	i;
+
 	set_info(info, argc, argv);
 	if (info->error)
 		return (error);
@@ -69,7 +73,8 @@ t_status	init(t_info *info, int argc, char **argv)
 	if (info->philo == NULL || info->fork == NULL)
 		return (error);
 	info->start_time = get_cur_time();
-	for (int i = 0; i < info->philo_count; i++)
+	i = -1;
+	while (++i < info->philo_count)
 		pthread_mutex_init(&info->fork[i], NULL);
 	pthread_create(&info->monitor, NULL, check_alive, (void *)info);
 	pthread_detach(info->monitor);

@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 17:36:47 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 20:27:37 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 21:50:15 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 
 void	*check_alive(void *arg)
 {
-	t_info		*info = (t_info *)arg;
+	t_info		*info;
+	int			i;
+	long long	cur;
 
+	info = (t_info *)arg;
 	while (!info->end)
 	{
-		for (int i = 0; i < info->philo_count; i++)
+		i = -1;
+		while (++i < info->philo_count)
 		{
 			if (info->philo_full_count == info->philo_count)
 				info->end = true;
 			if (info->philo[i].state == STATE_PHILO_FULL)
 				continue ;
-			if (get_elapsed_time(info) >= info->philo[i].last_meal_time + info->time_to_die)
+			cur = get_elapsed_time(info);
+			if (cur >= info->philo[i].last_meal_time + info->time_to_die)
 			{
 				print_action(info, DIED, i + 1);
 				info->end = true;

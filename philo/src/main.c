@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 13:59:45 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/26 17:19:09 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 21:37:50 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 int	main(int argc, char **argv)
 {
 	t_info		info;
+	int			i;
 
 	if (argc != 5 && argc != 6)
 		return (EX_USAGE);
@@ -27,7 +28,8 @@ int	main(int argc, char **argv)
 		while (!info.end)
 			;
 	}
-	for (int i = 0; i < info.philo_count; i++)
+	i = -1;
+	while (++i < info.philo_count)
 		pthread_mutex_destroy(&info.fork[i]);
 	if (info.philo != NULL)
 		free(info.philo);

@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:23:11 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 20:13:54 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 21:49:47 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ static void	thinking(t_philo *p)
 
 void	*routine(void *arg)
 {
-	t_philo	*p = (t_philo *)arg;
+	t_philo	*p;
 
+	p = (t_philo *)arg;
 	if (p->order % 2 == 0)
 		new_sleep(p->info->time_to_eat);
 	if (p->info->time_to_die == 0)
