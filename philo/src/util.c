@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:09:29 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/26 16:27:24 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 16:27:06 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,16 @@ void	print_action(t_info *info, char *action, int philo)
 {
 	if (!info->end)
 		printf(action, get_elapsed_time(info), philo);
+}
+
+void	new_sleep(long long sleep_time)
+{
+	const long long	cur = get_cur_time();
+
+	while (1)
+	{
+		if (get_cur_time() >= cur + sleep_time)
+			break ;
+		usleep(42);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/25 17:42:47 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 16:21:06 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int			ft_atoi(t_info *info, const char *s);
 long long	get_cur_time(void);
 long long	get_elapsed_time(t_info *info);
 void		print_action(t_info *info, char *action, int philo);
+void		new_sleep(long long sleep_time);
 /*
 ** philo.c
 */
