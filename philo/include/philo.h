@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 19:23:17 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 20:13:12 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ typedef struct s_info	t_info;
 
 typedef enum s_state
 {
-	STATE_PHILO_READY,
+	STATE_PHILO_HUNGRY,
 	STATE_PHILO_ATE,
 	STATE_PHILO_WAKE_UP,
-	STATE_PHILO_THOUGHT,
 	STATE_PHILO_DEAD,
 	STATE_PHILO_FULL
 }	t_state;
