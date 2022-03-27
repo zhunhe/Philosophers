@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 17:36:47 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 19:26:23 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/27 20:27:37 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	*check_alive(void *arg)
 		{
 			if (info->philo_full_count == info->philo_count)
 				info->end = true;
-			if (info->philo[i].state == STATE_PHILO_DEAD)
-				continue ;
 			if (info->philo[i].state == STATE_PHILO_FULL)
 				continue ;
 			if (get_elapsed_time(info) >= info->philo[i].last_meal_time + info->time_to_die)
