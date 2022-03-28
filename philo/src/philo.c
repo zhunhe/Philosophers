@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:23:11 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/28 15:30:00 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:41:09 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	*routine(void *arg)
 	p = (t_philo *)arg;
 	if (p->order % 2 == 0)
 		new_sleep(p->info->time_to_eat, p);
-	if (p->info->time_to_die == 0)
-		p->state = STATE_PHILO_DEAD;
 	while (!p->info->end)
 	{
 		if (p->state == STATE_PHILO_DEAD || p->state == STATE_PHILO_FULL)
