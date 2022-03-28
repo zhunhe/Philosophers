@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/28 15:29:35 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/28 16:26:07 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ t_status	init(t_info *info, int argc, char **argv);
 int			ft_atoi(t_info *info, const char *s);
 long long	get_cur_time(void);
 long long	get_elapsed_time(t_info *info);
-void		print_action(t_info *info, char *action, int philo);
 void		new_sleep(long long sleep_time, t_philo *p);
 /*
 ** philo.c
@@ -92,4 +91,8 @@ void		*routine(void *arg);
 ** monitor.c
 */
 void		*check_alive(void *arg);
+/*
+** print.c
+*/
+void		print_action(t_info *info, char *action, int philo);
 #endif
