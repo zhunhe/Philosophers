@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 20:13:12 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:29:35 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_info	t_info;
 typedef enum s_state
 {
 	STATE_PHILO_HUNGRY,
+	STATE_PHILO_EATING,
 	STATE_PHILO_ATE,
 	STATE_PHILO_WAKE_UP,
 	STATE_PHILO_DEAD,
@@ -82,7 +83,7 @@ int			ft_atoi(t_info *info, const char *s);
 long long	get_cur_time(void);
 long long	get_elapsed_time(t_info *info);
 void		print_action(t_info *info, char *action, int philo);
-void		new_sleep(long long sleep_time);
+void		new_sleep(long long sleep_time, t_philo *p);
 /*
 ** philo.c
 */

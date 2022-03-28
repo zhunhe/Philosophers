@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:23:11 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 21:49:47 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:30:00 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static void	eating(t_philo *p)
 	print_action(p->info, TAKEN_A_FORK, p->order);
 	pthread_mutex_lock(p->right_fork);
 	print_action(p->info, TAKEN_A_FORK, p->order);
+	p->state = STATE_PHILO_EATING;
 	p->last_meal_time = get_elapsed_time(p->info);
 	print_action(p->info, EATING, p->order);
-	new_sleep(p->info->time_to_eat);
+	new_sleep(p->info->time_to_eat, p);
 	pthread_mutex_unlock(p->left_fork);
 	pthread_mutex_unlock(p->right_fork);
 	if (p->state != STATE_PHILO_DEAD)
@@ -39,7 +40,7 @@ static void	sleeping(t_philo *p)
 {
 	print_action(p->info, SLEEPING, p->order);
 	p->last_meal_time = get_elapsed_time(p->info);
-	new_sleep(p->info->time_to_sleep);
+	new_sleep(p->info->time_to_sleep, p);
 	if (p->state != STATE_PHILO_DEAD)
 		p->state = STATE_PHILO_WAKE_UP;
 }
@@ -57,7 +58,7 @@ void	*routine(void *arg)
 
 	p = (t_philo *)arg;
 	if (p->order % 2 == 0)
-		new_sleep(p->info->time_to_eat);
+		new_sleep(p->info->time_to_eat, p);
 	if (p->info->time_to_die == 0)
 		p->state = STATE_PHILO_DEAD;
 	while (!p->info->end)
