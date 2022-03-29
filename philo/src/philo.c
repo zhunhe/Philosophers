@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:23:11 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/29 10:49:36 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/29 17:26:05 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	eating(t_philo *p)
 static void	sleeping(t_philo *p)
 {
 	print_action(p->info, SLEEPING, p->order);
-	p->last_meal_time = get_elapsed_time(p->info);
 	new_sleep(p->info->time_to_sleep);
 }
 
