@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 16:15:25 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 21:50:57 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/29 10:37:14 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	init_philo(t_info *info)
 	{
 		philo = &info->philo[i];
 		philo->order = i + 1;
-		philo->state = STATE_PHILO_HUNGRY;
 		philo->remain_eat_count = info->must_eat_count;
 		philo->left_fork = &info->fork[i];
 		philo->right_fork = &info->fork[(i + 1) % info->philo_count];

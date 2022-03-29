@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:09:29 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/28 15:34:46 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/29 10:37:50 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ long long	get_elapsed_time(t_info *info)
 	return (get_cur_time() - info->start_time);
 }
 
-void	new_sleep(long long sleep_time, t_philo *p)
+void	new_sleep(long long sleep_time)
 {
 	const long long	start_time = get_cur_time();
 	long long		cur_time;
@@ -63,8 +63,6 @@ void	new_sleep(long long sleep_time, t_philo *p)
 	cur_time = get_cur_time();
 	while (cur_time < start_time + sleep_time)
 	{
-		if (p->state == STATE_PHILO_EATING)
-			p->last_meal_time = cur_time;
 		usleep(42);
 		cur_time = get_cur_time();
 	}

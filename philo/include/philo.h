@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/28 16:26:07 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/29 10:36:58 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,10 @@
 typedef pthread_mutex_t	t_mutex;
 typedef struct s_info	t_info;
 
-typedef enum s_state
-{
-	STATE_PHILO_HUNGRY,
-	STATE_PHILO_EATING,
-	STATE_PHILO_ATE,
-	STATE_PHILO_WAKE_UP,
-	STATE_PHILO_DEAD,
-	STATE_PHILO_FULL
-}	t_state;
-
 typedef struct s_philo
 {
 	pthread_t	tid;
 	int			order;
-	t_state		state;
 	int			remain_eat_count;
 	long long	last_meal_time;
 	t_mutex		*left_fork;
@@ -82,7 +71,7 @@ t_status	init(t_info *info, int argc, char **argv);
 int			ft_atoi(t_info *info, const char *s);
 long long	get_cur_time(void);
 long long	get_elapsed_time(t_info *info);
-void		new_sleep(long long sleep_time, t_philo *p);
+void		new_sleep(long long sleep_time);
 /*
 ** philo.c
 */
