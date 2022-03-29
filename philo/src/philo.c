@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:23:11 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/29 10:38:06 by juhur            ###   ########.fr       */
+/*   Updated: 2022/03/29 10:49:36 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	eating(t_philo *p)
 	pthread_mutex_unlock(p->left_fork);
 	pthread_mutex_unlock(p->right_fork);
 	if (p->remain_eat_count > 0)
-		--p->remain_eat_count;
+		if (--p->remain_eat_count == 0)
+			++p->info->philo_full_count;
 }
 
 static void	sleeping(t_philo *p)
