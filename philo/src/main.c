@@ -5,35 +5,44 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 13:59:45 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 21:37:50 by juhur            ###   ########.fr       */
+/*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
+/*   Updated: 2022/04/14 11:15:56 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sysexits.h>
 #include <string.h>
-#include <stdlib.h>
-#include "philo.h"
+#include <philo.h>
+
+static t_status	check_argc(t_table *table, int argc)
+{
+	if (argc != 5 && argc != 6)
+		table->status = ERROR;
+	return (table->status);
+}
+
+static void	destroy_mutex(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->philo_count)
+		pthread_mutex_destroy(&table->philo[i].fork);
+}
 
 int	main(int argc, char **argv)
 {
-	t_info		info;
-	int			i;
+	t_table		table;
+	pthread_t	thread;
 
-	if (argc != 5 && argc != 6)
-		return (EX_USAGE);
-	memset(&info, 0, sizeof(t_info));
-	if (init(&info, argc, argv) == ok)
-	{
-		while (!info.end)
-			;
-	}
-	i = -1;
-	while (++i < info.philo_count)
-		pthread_mutex_destroy(&info.fork[i]);
-	if (info.philo != NULL)
-		free(info.philo);
-	if (info.fork != NULL)
-		free(info.fork);
-	return (EXIT_SUCCESS);
+	memset(&table, 0, sizeof(t_table));
+	if (check_argc(&table, argc) != OK)
+		return (1);
+	if (init(&table, argc, argv) != OK)
+		return (1);
+	pthread_create(&thread, NULL, monitor, &table);
+	pthread_detach(thread);
+	create_philo(&table);
+	join_philo(&table);
+	destroy_mutex(&table);
+	return (0);
 }

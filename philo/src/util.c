@@ -5,67 +5,52 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 16:09:29 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/28 15:34:46 by juhur            ###   ########.fr       */
+/*   Created: 2022/04/11 15:58:16 by juhur             #+#    #+#             */
+/*   Updated: 2022/04/14 14:05:27 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
-#include <sys/time.h>
+#include <stdio.h>
 #include <unistd.h>
-#include "philo.h"
+#include <philo.h>
 
-int	ft_atoi(t_info *info, const char *s)
+int64_t	time_to_ms(struct timeval time)
 {
-	int		sign;
-	int64_t	num;
-
-	if (!*s)
-	{
-		info->error = true;
-		return (0);
-	}
-	sign = 1;
-	if (*s == '-')
-	{
-		++s;
-		sign = -1;
-	}
-	num = 0;
-	while (*s != '\0')
-	{
-		if (*s < '0' || *s > '9')
-			info->error = true;
-		num = 10 * num + *(s++) - '0';
-	}
-	return (sign * num);
+	return ((int64_t)time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-long long	get_cur_time(void)
+bool	is_ended(t_cs *cs)
 {
-	struct timeval	t;
+	bool	result;
 
-	if (gettimeofday(&t, NULL) == -1)
-		return (-1);
-	return ((long long)t.tv_sec * MILLISEC + t.tv_usec / MILLISEC);
+	result = false;
+	pthread_mutex_lock(&cs->mutex_end);
+	result = cs->end;
+	pthread_mutex_unlock(&cs->mutex_end);
+	return (result);
 }
 
-long long	get_elapsed_time(t_info *info)
+void	print_log(t_cs *cs, char *action, int order, int64_t start_time)
 {
-	return (get_cur_time() - info->start_time);
+	pthread_mutex_lock(&cs->mutex_end);
+	if (!cs->end)
+		printf(action, get_cur_time_in_ms() - start_time, order);
+	pthread_mutex_unlock(&cs->mutex_end);
 }
 
-void	new_sleep(long long sleep_time, t_philo *p)
+int64_t	get_cur_time_in_ms(void)
 {
-	const long long	start_time = get_cur_time();
-	long long		cur_time;
+	struct timeval	cur;
 
-	cur_time = get_cur_time();
-	while (cur_time < start_time + sleep_time)
-	{
-		if (p->state == STATE_PHILO_EATING)
-			p->last_meal_time = cur_time;
-		usleep(42);
-		cur_time = get_cur_time();
-	}
+	gettimeofday(&cur, NULL);
+	return (time_to_ms(cur));
+}
+
+void	newsleep(int64_t wait_time)
+{
+	int64_t			start_time;
+
+	start_time = get_cur_time_in_ms();
+	while (get_cur_time_in_ms() - start_time < wait_time)
+		usleep(100);
 }

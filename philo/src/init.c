@@ -5,79 +5,94 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/20 16:15:25 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/27 21:50:57 by juhur            ###   ########.fr       */
+/*   Created: 2022/04/11 13:42:38 by juhur             #+#    #+#             */
+/*   Updated: 2022/04/14 14:16:56 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "philo.h"
+#include <philo.h>
 
-static void	set_info(t_info *info, int argc, char **argv)
+int	_atoi(t_table *table, char *str)
 {
-	info->philo_count = ft_atoi(info, argv[1]);
-	info->time_to_die = ft_atoi(info, argv[2]);
-	info->time_to_eat = ft_atoi(info, argv[3]);
-	info->time_to_sleep = ft_atoi(info, argv[4]);
-	info->must_eat_count = -1;
+	int		sign;
+	int64_t	num;
+
+	sign = 1;
+	if (*str == '-')
+	{
+		sign = -1;
+		++str;
+	}
+	num = 0;
+	while (*str != '\0')
+	{
+		if (*str < '0' || *str > '9')
+		{
+			table->status = ERROR;
+			break ;
+		}
+		num = num * 10 + *(str++) - '0';
+	}
+	return (sign * num);
+}
+
+static t_status	set_table_data(t_table *table, int argc, char **argv)
+{
+	table->philo_count = _atoi(table, argv[1]);
+	table->share.time_to_die = _atoi(table, argv[2]);
+	table->share.time_to_eat = _atoi(table, argv[3]);
+	table->share.time_to_sleep = _atoi(table, argv[4]);
+	table->share.must_eat_count = -1;
 	if (argc == 6)
-		info->must_eat_count = ft_atoi(info, argv[5]);
+		table->share.must_eat_count = _atoi(table, argv[5]);
+	return (table->status);
 }
 
-static t_status	check_info(t_info *info, int argc)
+static t_status	check_table_data(t_table *table, int argc)
 {
-	if (info->philo_count < 1)
-		return (error);
-	if (info->time_to_die < 0)
-		return (error);
-	if (info->time_to_eat < 0)
-		return (error);
-	if (info->time_to_sleep < 0)
-		return (error);
-	if (argc == 6 && info->must_eat_count < 0)
-		return (error);
-	return (ok);
+	if (table->philo_count < 1)
+		table->status = ERROR;
+	if (table->share.time_to_die < 0)
+		table->status = ERROR;
+	if (table->share.time_to_eat < 0)
+		table->status = ERROR;
+	if (table->share.time_to_sleep < 0)
+		table->status = ERROR;
+	if (argc == 6 && table->share.must_eat_count < 0)
+		table->status = ERROR;
+	return (table->status);
 }
 
-static void	init_philo(t_info *info)
+static void	init_philo(t_table *table)
 {
-	t_philo	*philo;
+	t_philo	*p;
 	int		i;
 
 	i = -1;
-	while (++i < info->philo_count)
+	while (++i < table->philo_count)
 	{
-		philo = &info->philo[i];
-		philo->order = i + 1;
-		philo->state = STATE_PHILO_HUNGRY;
-		philo->remain_eat_count = info->must_eat_count;
-		philo->left_fork = &info->fork[i];
-		philo->right_fork = &info->fork[(i + 1) % info->philo_count];
-		philo->info = info;
-		pthread_create(&philo->tid, NULL, routine, (void *)philo);
-		pthread_detach(philo->tid);
+		p = (t_philo *)&table->philo[i];
+		p->order = i + 1;
+		p->left_fork = &table->philo[i].fork;
+		p->right_fork = &table->philo[(i + 1) % table->philo_count].fork;
+		p->cs = &table->cs;
+		p->share = &table->share;
+		pthread_mutex_init(&p->fork, NULL);
+		pthread_mutex_init(&p->lock, NULL);
 	}
 }
 
-t_status	init(t_info *info, int argc, char **argv)
+t_status	init(t_table *table, int argc, char **argv)
 {
-	int	i;
-
-	set_info(info, argc, argv);
-	if (info->error)
-		return (error);
-	if (check_info(info, argc) == error)
-		return (error);
-	info->philo = (t_philo *)malloc(sizeof(t_philo) * info->philo_count);
-	info->fork = (t_mutex *)malloc(sizeof(t_mutex) * info->philo_count);
-	if (info->philo == NULL || info->fork == NULL)
-		return (error);
-	info->start_time = get_cur_time();
-	i = -1;
-	while (++i < info->philo_count)
-		pthread_mutex_init(&info->fork[i], NULL);
-	pthread_create(&info->monitor, NULL, check_alive, (void *)info);
-	pthread_detach(info->monitor);
-	init_philo(info);
-	return (ok);
+	if (set_table_data(table, argc, argv) != OK)
+		return (table->status);
+	if (check_table_data(table, argc) != OK)
+		return (table->status);
+	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->philo_count);
+	if (table->philo == NULL)
+		return (table->status = ERROR);
+	pthread_mutex_init(&table->cs.mutex_end, NULL);
+	init_philo(table);
+	return (OK);
 }

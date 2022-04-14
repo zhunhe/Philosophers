@@ -5,70 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 17:23:11 by juhur             #+#    #+#             */
-/*   Updated: 2022/03/28 15:41:09 by juhur            ###   ########.fr       */
+/*   Created: 2022/04/11 14:24:44 by juhur             #+#    #+#             */
+/*   Updated: 2022/04/14 14:04:41 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include <philo.h>
 
-static void	eating(t_philo *p)
-{
-	pthread_mutex_lock(p->left_fork);
-	print_action(p->info, TAKEN_A_FORK, p->order);
-	pthread_mutex_lock(p->right_fork);
-	print_action(p->info, TAKEN_A_FORK, p->order);
-	p->state = STATE_PHILO_EATING;
-	p->last_meal_time = get_elapsed_time(p->info);
-	print_action(p->info, EATING, p->order);
-	new_sleep(p->info->time_to_eat, p);
-	pthread_mutex_unlock(p->left_fork);
-	pthread_mutex_unlock(p->right_fork);
-	if (p->state != STATE_PHILO_DEAD)
-		p->state = STATE_PHILO_ATE;
-	if (p->remain_eat_count > 0 && p->state == STATE_PHILO_ATE)
-	{
-		if (--p->remain_eat_count == 0)
-		{
-			p->state = STATE_PHILO_FULL;
-			p->info->philo_full_count++;
-		}
-	}
-}
-
-static void	sleeping(t_philo *p)
-{
-	print_action(p->info, SLEEPING, p->order);
-	p->last_meal_time = get_elapsed_time(p->info);
-	new_sleep(p->info->time_to_sleep, p);
-	if (p->state != STATE_PHILO_DEAD)
-		p->state = STATE_PHILO_WAKE_UP;
-}
-
-static void	thinking(t_philo *p)
-{
-	print_action(p->info, THINKING, p->order);
-	if (p->state != STATE_PHILO_DEAD)
-		p->state = STATE_PHILO_HUNGRY;
-}
-
-void	*routine(void *arg)
+void	create_philo(t_table *table)
 {
 	t_philo	*p;
+	int		i;
 
-	p = (t_philo *)arg;
-	if (p->order % 2 == 0)
-		new_sleep(p->info->time_to_eat, p);
-	while (!p->info->end)
+	table->share.start_time = get_cur_time_in_ms() - table->share.start_time;
+	i = -1;
+	while (++i < table->philo_count)
 	{
-		if (p->state == STATE_PHILO_DEAD || p->state == STATE_PHILO_FULL)
-			break ;
-		else if (p->state == STATE_PHILO_HUNGRY)
-			eating(p);
-		else if (p->state == STATE_PHILO_ATE)
-			sleeping(p);
-		else if (p->state == STATE_PHILO_WAKE_UP)
-			thinking(p);
+		p = (t_philo *)&table->philo[i];
+		p->last_meal_time = table->share.start_time;
+		pthread_create(&p->thread, NULL, routine, (void *)p);
 	}
-	return ((void *)&p->order);
+}
+
+void	join_philo(t_table *table)
+{
+	int		i;
+
+	i = -1;
+	while (++i < table->philo_count)
+		pthread_join(table->philo[i].thread, NULL);
 }
