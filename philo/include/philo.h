@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 20:18:57 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 22:11:29 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,13 @@ typedef struct s_table
 
 typedef enum s_status
 {
-	OK,
-	ERROR
+	STATUS_OK,
+	STATUS_ERROR_ARGC,
+	STATUS_ERROR_ARGV,
+	STATUS_ERROR_MALLOC,
+	STATUS_ERROR_INIT_MUTEX,
+	STATUS_ERROR_CREATE_THREAD,
+	STATUS_MAX
 }	t_status;
 
 # define TAKEN_A_FORK	"\e[1;37m%lld	%d	has taken a fork 🥢\e[0m\n"
