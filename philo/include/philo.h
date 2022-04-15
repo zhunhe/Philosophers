@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 14:03:32 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 14:13:19 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ typedef enum s_status
 ** init.c
 */
 t_status	init(t_table *table, int argc, char **argv);
-/*
-** philo.c
-*/
-void		create_philo(t_table *table);
 /*
 ** routine.c
 */
