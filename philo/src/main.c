@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/14 11:15:56 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 11:44:28 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init(&table, argc, argv) != OK)
 		return (1);
+	create_philo(&table);
 	pthread_create(&thread, NULL, monitor, &table);
 	pthread_detach(thread);
-	create_philo(&table);
 	join_philo(&table);
 	destroy_mutex(&table);
 	return (0);

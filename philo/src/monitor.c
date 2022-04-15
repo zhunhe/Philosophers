@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/14 16:25:44 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 10:18:06 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	is_monitor_end(t_table *table)
 	i = -1;
 	while (++i < table->philo_count)
 	{
-		pthread_mutex_lock(&(table->philo[i].lock));
+		pthread_mutex_lock(&table->philo[i].lock);
 		everyone_full &= (table->share.must_eat_count <= table->philo[i].meal_count);
-		someone_dead = (get_cur_time_in_ms() - table->share.start_time - table->philo[i].last_meal_time > table->share.time_to_die);
-		pthread_mutex_unlock(&(table->philo[i].lock));
+		someone_dead = (get_elapsed_time_in_ms(&table->share) - table->philo[i].last_meal_time > table->share.time_to_die);
+		pthread_mutex_unlock(&table->philo[i].lock);
 		if (someone_dead)
 			break ;
 	}

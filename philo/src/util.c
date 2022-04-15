@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:58:16 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/14 16:26:08 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/14 22:07:09 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,16 @@ int64_t	get_cur_time_in_ms(void)
 	return (time_to_ms(cur));
 }
 
+int64_t	get_elapsed_time_in_ms(t_share *share)
+{
+	return (get_cur_time_in_ms() - share->start_time);
+}
+
 void	newsleep(int64_t wait_time)
 {
-	int64_t			start_time;
+	int64_t	end_time;
 
-	start_time = get_cur_time_in_ms();
-	while (get_cur_time_in_ms() - start_time < wait_time)
+	end_time = get_cur_time_in_ms() + wait_time;
+	while (get_cur_time_in_ms() < end_time)
 		usleep(100);
 }

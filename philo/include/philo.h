@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/14 16:27:19 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/14 22:19:09 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ typedef enum s_status
 	ERROR
 }	t_status;
 
-# define TAKEN_A_FORK	"\e[1;30m%lld	%d	has taken a fork\e[0m\n"
-# define EATING			"\e[1;37m%lld	%d	is eating\e[0m\n"
-# define SLEEPING		"\e[1;32m%lld	%d	is sleeping\e[0m\n"
-# define THINKING		"\e[1;34m%lld	%d	is thinking\e[0m\n"
-# define DIED			"\e[1;31m%lld	%d	is died\e[0m\n"
+# define TAKEN_A_FORK	"\e[1;30m%lld	%d	has taken a fork\e[0m 🥢\n"
+# define EATING			"\e[1;37m%lld	%d	is eating\e[0m 🍝\n"
+# define SLEEPING		"\e[1;33m%lld	%d	is sleeping\e[0m 😴\n"
+# define THINKING		"\e[1;34m%lld	%d	is thinking\e[0m 🤔\n"
+# define DIED			"\e[1;31m%lld	%d	is died\e[0m 😵\n"
 /*
 ** init.c
 */
@@ -90,6 +90,7 @@ int64_t		time_to_ms(struct timeval time);
 void		print_log(t_cs *cs, char *action, int order, int64_t start_time);
 bool		is_ended(t_cs *cs);
 int64_t		get_cur_time_in_ms(void);
+int64_t		get_elapsed_time_in_ms(t_share *share);
 void		newsleep(int64_t wait_time);
 /*
 ** monitor.c
