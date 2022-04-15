@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 14:00:53 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 14:03:22 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ static void	destroy_mutex(t_table *table)
 		pthread_mutex_destroy(&table->philo[i].fork);
 		pthread_mutex_destroy(&table->philo[i].lock);
 	}
+}
+
+static void	join_philo(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->philo_count)
+		pthread_join(table->philo[i].thread, NULL);
 }
 
 int	main(int argc, char **argv)
