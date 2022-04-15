@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 14:47:44 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 19:01:45 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 #include <unistd.h>
 #include <philo.h>
 
-static void	end_simulation(t_philo *p, bool full, bool died)
+static int	end_simulation(t_cs *cs, t_share *share, bool died, t_philo *p)
 {
-	if (!full && !died)
-		return ;
-	pthread_mutex_lock(&p->cs->mutex_end);
+	pthread_mutex_lock(&cs->mutex_end);
 	if (died)
 	{
-		printf(DIED, get_elapsed_time_in_ms(p->share), p->order);
+		printf(DIED, get_elapsed_time_in_ms(share), p->order);
 		put_down_fork(p);
 	}
-	p->cs->end = 1;
-	pthread_mutex_unlock(&p->cs->mutex_end);
+	else
+		printf(FULL, get_elapsed_time_in_ms(share));
+	cs->end = 1;
+	pthread_mutex_unlock(&cs->mutex_end);
+	return (1);
 }
 
 static bool	check_simulation(t_table *table)
@@ -45,16 +46,14 @@ static bool	check_simulation(t_table *table)
 		s = &table->share;
 		pthread_mutex_lock(&p->lock);
 		all_philo_full &= (s->must_eat_count <= p->meal_count);
-		is_philo_died = (get_elapsed_time_in_ms(s) - p->last_meal_time > s->time_to_die);
+		if (get_elapsed_time_in_ms(s) >= s->time_to_die + p->last_meal_time)
+			is_philo_died = true;
 		pthread_mutex_unlock(&p->lock);
 		if (is_philo_died)
 			break ;
 	}
-	if (all_philo_full || is_philo_died)
-	{
-		end_simulation(&table->philo[i], all_philo_full, is_philo_died);
-		return (1);
-	}
+	if (is_philo_died || all_philo_full)
+		return (end_simulation(&table->cs, &table->share, is_philo_died, p));
 	return (0);
 }
 
