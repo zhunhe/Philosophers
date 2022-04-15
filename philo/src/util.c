@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:58:16 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/14 22:07:09 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 14:33:38 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ bool	is_ended(t_cs *cs)
 	return (result);
 }
 
-void	print_log(t_cs *cs, char *action, int order, int64_t start_time)
+void	print_log(t_philo *p, char *action)
 {
-	pthread_mutex_lock(&cs->mutex_end);
-	if (!cs->end)
-		printf(action, get_cur_time_in_ms() - start_time, order);
-	pthread_mutex_unlock(&cs->mutex_end);
+	pthread_mutex_lock(&p->cs->mutex_end);
+	if (!p->cs->end)
+		printf(action, get_elapsed_time_in_ms(p->share), p->order);
+	pthread_mutex_unlock(&p->cs->mutex_end);
 }
 
 int64_t	get_cur_time_in_ms(void)

@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 14:05:14 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 14:47:44 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,48 @@
 #include <unistd.h>
 #include <philo.h>
 
-static void	handle_someone_dead(t_philo *philo)
+static void	end_simulation(t_philo *p, bool full, bool died)
 {
-	pthread_mutex_lock(&philo->cs->mutex_end);
-	printf(DIED, get_cur_time_in_ms() - philo->share->start_time, philo->order);
-	philo->cs->end = 1;
-	put_down_fork(philo);
-	pthread_mutex_unlock(&philo->cs->mutex_end);
+	if (!full && !died)
+		return ;
+	pthread_mutex_lock(&p->cs->mutex_end);
+	if (died)
+	{
+		printf(DIED, get_elapsed_time_in_ms(p->share), p->order);
+		put_down_fork(p);
+	}
+	p->cs->end = 1;
+	pthread_mutex_unlock(&p->cs->mutex_end);
 }
 
-void	stop_simulation(t_table *table)
+static bool	check_simulation(t_table *table)
 {
-	pthread_mutex_lock(&table->cs.mutex_end);
-	table->cs.end = 1;
-	pthread_mutex_unlock(&table->cs.mutex_end);
-}
+	int		i;
+	bool	all_philo_full;
+	bool	is_philo_died;
+	t_share	*s;
+	t_philo	*p;
 
-static void	handle_everyone_full(t_table *table)
-{
-	stop_simulation(table);
-}
-
-int	is_monitor_end(t_table *table)
-{
-	int	i;
-	int	everyone_full;
-	int	someone_dead;
-
-	everyone_full = (table->share.must_eat_count != -1);
-	someone_dead = 0;
+	all_philo_full = (table->share.must_eat_count != -1);
+	is_philo_died = false;
 	i = -1;
 	while (++i < table->philo_count)
 	{
-		pthread_mutex_lock(&table->philo[i].lock);
-		everyone_full &= (table->share.must_eat_count <= table->philo[i].meal_count);
-		someone_dead = (get_elapsed_time_in_ms(&table->share) - table->philo[i].last_meal_time > table->share.time_to_die);
-		pthread_mutex_unlock(&table->philo[i].lock);
-		if (someone_dead)
+		p = &table->philo[i];
+		s = &table->share;
+		pthread_mutex_lock(&p->lock);
+		all_philo_full &= (s->must_eat_count <= p->meal_count);
+		is_philo_died = (get_elapsed_time_in_ms(s) - p->last_meal_time > s->time_to_die);
+		pthread_mutex_unlock(&p->lock);
+		if (is_philo_died)
 			break ;
 	}
-	if (someone_dead)
-		handle_someone_dead(table->philo + i);
-	else if (everyone_full)
-		handle_everyone_full(table);
-	return (everyone_full || someone_dead);
+	if (all_philo_full || is_philo_died)
+	{
+		end_simulation(&table->philo[i], all_philo_full, is_philo_died);
+		return (1);
+	}
+	return (0);
 }
 
 void	*monitor(void *arg)
@@ -65,7 +63,7 @@ void	*monitor(void *arg)
 	t_table	*t;
 
 	t = (t_table *)arg;
-	while (!is_monitor_end(t))
+	while (!check_simulation(t))
 		usleep(1000);
 	return (NULL);
 }
