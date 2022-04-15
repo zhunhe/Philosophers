@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 10:18:06 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/15 14:05:14 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,7 @@ void	*monitor(void *arg)
 	t_table	*t;
 
 	t = (t_table *)arg;
-	while (1)
-	{
-		if (is_monitor_end(t))
-		{
-			stop_simulation(t);
-			break ;
-		}
+	while (!is_monitor_end(t))
 		usleep(1000);
-	}
 	return (NULL);
 }
