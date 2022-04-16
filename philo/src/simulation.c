@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 16:24:11 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 16:34:02 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ void	stop_simulation(t_cs *cs)
 	pthread_mutex_lock(&cs->mutex_end);
 	cs->end = true;
 	pthread_mutex_unlock(&cs->mutex_end);
+}
+
+static t_status	create_monitor(t_table *table)
+{
+	if (pthread_create(&table->monitor, NULL, monitor_routine, table))
+	{
+		stop_simulation(&table->cs);
+		return (STATUS_ERROR_CREATE_THREAD);
+	}
+	pthread_detach(table->monitor);
+	return (STATUS_OK);
 }
 
 t_status	run_simulation(t_table *table)
@@ -34,17 +45,12 @@ t_status	run_simulation(t_table *table)
 		{
 			stop_simulation(&table->cs);
 			table->status = STATUS_ERROR_CREATE_THREAD;
+			break ;
 		}
 	}
-	if (pthread_create(&table->monitor, NULL, monitor_routine, table))
-	{
-		stop_simulation(&table->cs);
-		table->status = STATUS_ERROR_CREATE_THREAD;
-	}
-	else
-		pthread_detach(table->monitor);
-	i = -1;
-	while (++i < table->philo_count)
+	if (table->status == STATUS_OK)
+		table->status = create_monitor(table);
+	while (i--)
 		pthread_join(table->philo[i].thread, NULL);
 	return (table->status);
 }
