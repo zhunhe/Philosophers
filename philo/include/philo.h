@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 13:28:41 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 14:43:05 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef enum s_status
 # define SLEEPING		"\e[1;34m%lld	%d	is sleeping 💤\e[0m\n"
 # define THINKING		"\e[1;33m%lld	%d	is thinking 🤔\e[0m\n"
 # define DIED			"\e[1;40m\e[1;31m%lld	%d	is died 💀 \e[0m\e[0m\n"
-# define FULL			"\e[1;40m\e[1;37m%lld	All philosophers are full 🐷 \e[0m\e[0m\n"
+# define FULL			"\e[1;35m%lld	All philosophers are full 🐷 \e[0m\n"
 
 /*
 ** init.c
