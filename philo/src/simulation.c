@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:00:25 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:06:26 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ t_status	run_simulation(t_table *table)
 	while (++i < table->philo_count)
 	{
 		p = (t_philo *)&table->philo[i];
-		if (pthread_create(&p->thread, NULL, routine, p))
+		if (pthread_create(&p->thread, NULL, philo_routine, p))
 		{
 			stop_simulation(&table->cs);
 			table->status = STATUS_ERROR_CREATE_THREAD;
 		}
 	}
-	if (pthread_create(&table->monitor, NULL, monitor, table))
+	if (pthread_create(&table->monitor, NULL, monitor_routine, table))
 	{
 		stop_simulation(&table->cs);
 		table->status = STATUS_ERROR_CREATE_THREAD;

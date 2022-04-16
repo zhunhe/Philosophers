@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:01:17 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:06:05 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ typedef enum s_status
 */
 t_status	init(t_table *table, int argc, char **argv);
 /*
-** routine.c
+** philo.c
 */
 void		put_down_fork(t_philo *p);
-void		*routine(void *arg);
+void		*philo_routine(void *arg);
 /*
 ** util.c
 */
@@ -97,7 +97,7 @@ void		newsleep(int64_t wait_time);
 /*
 ** monitor.c
 */
-void		*monitor(void *arg);
+void		*monitor_routine(void *arg);
 /*
 ** philo.c
 */

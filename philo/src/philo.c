@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:32:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 14:22:09 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:05:53 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static bool	thinking(t_philo *p)
 	return (is_ended(p->cs));
 }
 
-void	*routine(void *arg)
+void	*philo_routine(void *arg)
 {
 	t_philo		*p;
 

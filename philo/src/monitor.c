@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 19:01:45 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:05:47 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	check_simulation(t_table *table)
 	return (0);
 }
 
-void	*monitor(void *arg)
+void	*monitor_routine(void *arg)
 {
 	t_table	*t;
 
