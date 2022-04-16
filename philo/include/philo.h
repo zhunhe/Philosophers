@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:11:42 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:13:44 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_status	init(t_table *table, int argc, char **argv);
 void		put_down_fork(t_philo *p);
 void		*philo_routine(void *arg);
 /*
-** util.c
+** time.c
 */
 int64_t		time_to_ms(struct timeval time);
 int64_t		get_cur_time_in_ms(void);

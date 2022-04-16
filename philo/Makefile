@@ -6,7 +6,7 @@
 #    By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/08 14:17:22 by juhur             #+#    #+#              #
-#    Updated: 2022/04/16 14:37:22 by juhur            ###   ########.fr        #
+#    Updated: 2022/04/16 15:13:56 by juhur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 	main.c \
 	init.c \
 	philo.c \
-	util.c \
+	time.c \
 	monitor.c \
 	simulation.c \
 )
