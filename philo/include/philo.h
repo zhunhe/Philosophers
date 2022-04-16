@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 18:20:42 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 19:00:15 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ typedef enum s_status
 {
 	STATUS_OK,
 	STATUS_ERROR_ARGC,
-	STATUS_ERROR_ARGV,
+	STATUS_ERROR_INVALID_CHAR,
+	STATUS_ERROR_PHILO_COUNT,
+	STATUS_ERROR_MINUS,
 	STATUS_ERROR_MALLOC,
 	STATUS_ERROR_INIT_MUTEX,
 	STATUS_ERROR_CREATE_THREAD,
@@ -77,6 +79,11 @@ typedef enum s_status
 # define DIED			"\e[1;40m\e[1;31m%lld	%d	is died 💀 \e[0m\e[0m\n"
 # define FULL			"\e[1;35m%lld	All philosophers are full 🐷 \e[0m\n"
 
+/*
+** arg.c
+*/
+t_status	check_argc(t_table *table, int argc);
+t_status	check_argv(t_table *table, int argc, char **argv);
 /*
 ** init.c
 */
