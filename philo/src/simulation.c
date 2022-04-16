@@ -6,10 +6,11 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:06:26 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:11:01 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <philo.h>
 
 void	stop_simulation(t_cs *cs)
@@ -57,4 +58,12 @@ bool	is_ended(t_cs *cs)
 	result = cs->end;
 	pthread_mutex_unlock(&cs->mutex_end);
 	return (result);
+}
+
+void	print_log(t_philo *p, char *action)
+{
+	pthread_mutex_lock(&p->cs->mutex_end);
+	if (!p->cs->end)
+		printf(action, get_elapsed_time_in_ms(p->share), p->order);
+	pthread_mutex_unlock(&p->cs->mutex_end);
 }

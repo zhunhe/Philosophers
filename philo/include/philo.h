@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:06:05 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:11:42 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void		*philo_routine(void *arg);
 ** util.c
 */
 int64_t		time_to_ms(struct timeval time);
-void		print_log(t_philo *p, char *action);
 int64_t		get_cur_time_in_ms(void);
 int64_t		get_elapsed_time_in_ms(t_share *share);
 void		newsleep(int64_t wait_time);
@@ -99,8 +98,9 @@ void		newsleep(int64_t wait_time);
 */
 void		*monitor_routine(void *arg);
 /*
-** philo.c
+** simulation.c
 */
 t_status	run_simulation(t_table *table);
 bool		is_ended(t_cs *cs);
+void		print_log(t_philo *p, char *action);
 #endif
