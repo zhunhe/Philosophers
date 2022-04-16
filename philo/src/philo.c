@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:32:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:05:53 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:24:27 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,10 @@ static bool	eating(t_philo *p)
 	return (is_ended(p->cs));
 }
 
-static bool	sleeping(t_philo *p)
+static bool	sleeping_thinking(t_philo *p)
 {
 	print_log(p, SLEEPING);
 	newsleep(p->share->time_to_sleep);
-	return (is_ended(p->cs));
-}
-
-static bool	thinking(t_philo *p)
-{
 	print_log(p, THINKING);
 	return (is_ended(p->cs));
 }
@@ -88,9 +83,7 @@ void	*philo_routine(void *arg)
 		}
 		if (eating(p))
 			return (NULL);
-		if (sleeping(p))
-			return (NULL);
-		if (thinking(p))
+		if (sleeping_thinking(p))
 			return (NULL);
 	}
 	return (NULL);
