@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:11:01 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 16:24:11 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ bool	is_ended(t_cs *cs)
 {
 	bool	result;
 
-	result = false;
 	pthread_mutex_lock(&cs->mutex_end);
 	result = cs->end;
 	pthread_mutex_unlock(&cs->mutex_end);
