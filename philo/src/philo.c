@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:32:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:24:27 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 17:53:43 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <philo.h>
 
-static bool	take_fork(t_philo *p)
+static void	take_fork(t_philo *p)
 {
 	if (p->order & 1)
 	{
@@ -30,7 +30,6 @@ static bool	take_fork(t_philo *p)
 		pthread_mutex_lock(p->left_fork);
 		print_log(p, TAKEN_A_FORK);
 	}
-	return (is_ended(p->cs));
 }
 
 void	put_down_fork(t_philo *p)
@@ -47,7 +46,7 @@ void	put_down_fork(t_philo *p)
 	}
 }
 
-static bool	eating(t_philo *p)
+static void	eating(t_philo *p)
 {
 	pthread_mutex_lock(&p->lock);
 	print_log(p, EATING);
@@ -56,15 +55,13 @@ static bool	eating(t_philo *p)
 	pthread_mutex_unlock(&p->lock);
 	newsleep(p->share->time_to_eat);
 	put_down_fork(p);
-	return (is_ended(p->cs));
 }
 
-static bool	sleeping_thinking(t_philo *p)
+static void	sleeping_thinking(t_philo *p)
 {
 	print_log(p, SLEEPING);
 	newsleep(p->share->time_to_sleep);
 	print_log(p, THINKING);
-	return (is_ended(p->cs));
 }
 
 void	*philo_routine(void *arg)
@@ -76,15 +73,9 @@ void	*philo_routine(void *arg)
 		usleep(p->share->time_to_eat * 1000);
 	while (!is_ended(p->cs))
 	{
-		if (take_fork(p))
-		{
-			put_down_fork(p);
-			return (NULL);
-		}
-		if (eating(p))
-			return (NULL);
-		if (sleeping_thinking(p))
-			return (NULL);
+		take_fork(p);
+		eating(p);
+		sleeping_thinking(p);
 	}
 	return (NULL);
 }
