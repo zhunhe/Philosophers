@@ -6,11 +6,12 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 16:34:02 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 18:06:41 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <philo.h>
 
 void	stop_simulation(t_cs *cs)
@@ -29,6 +30,20 @@ static t_status	create_monitor(t_table *table)
 	}
 	pthread_detach(table->monitor);
 	return (STATUS_OK);
+}
+
+static void	destroy_free(t_table *table)
+{
+	int	i;
+
+	pthread_mutex_destroy(&table->cs.mutex_end);
+	i = -1;
+	while (++i < table->philo_count)
+	{
+		pthread_mutex_destroy(&table->philo[i].fork);
+		pthread_mutex_destroy(&table->philo[i].lock);
+	}
+	free(table->philo);
 }
 
 t_status	run_simulation(t_table *table)
@@ -52,6 +67,7 @@ t_status	run_simulation(t_table *table)
 		table->status = create_monitor(table);
 	while (i--)
 		pthread_join(table->philo[i].thread, NULL);
+	destroy_free(table);
 	return (table->status);
 }
 
