@@ -6,17 +6,23 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 14:36:52 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 14:51:51 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
+void	stop_simulation(t_cs *cs)
+{
+	pthread_mutex_lock(&cs->mutex_end);
+	cs->end = true;
+	pthread_mutex_unlock(&cs->mutex_end);
+}
+
 t_status	run_simulation(t_table *table)
 {
 	t_philo		*p;
 	int			i;
-	pthread_t	thread;
 
 	table->share.start_time = get_cur_time_in_ms();
 	i = -1;
@@ -25,21 +31,17 @@ t_status	run_simulation(t_table *table)
 		p = (t_philo *)&table->philo[i];
 		if (pthread_create(&p->thread, NULL, routine, p))
 		{
-			pthread_mutex_lock(&table->cs.mutex_end);
-			table->cs.end = true;
-			pthread_mutex_unlock(&table->cs.mutex_end);
+			stop_simulation(&table->cs);
 			table->status = STATUS_ERROR_CREATE_THREAD;
 		}
 	}
-	if (pthread_create(&thread, NULL, monitor, table))
+	if (pthread_create(&table->monitor, NULL, monitor, table))
 	{
-		pthread_mutex_lock(&table->cs.mutex_end);
-		table->cs.end = true;
-		pthread_mutex_unlock(&table->cs.mutex_end);
+		stop_simulation(&table->cs);
 		table->status = STATUS_ERROR_CREATE_THREAD;
 	}
 	else
-		pthread_detach(thread);
+		pthread_detach(table->monitor);
 	i = -1;
 	while (++i < table->philo_count)
 		pthread_join(table->philo[i].thread, NULL);

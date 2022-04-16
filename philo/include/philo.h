@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 14:44:03 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 14:51:28 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_table
 	t_cs		cs;
 	int			full_philo_count;
 	int			philo_count;
+	pthread_t	monitor;
 	t_philo		*philo;
 }				t_table;
 
