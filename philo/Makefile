@@ -6,7 +6,7 @@
 #    By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/08 14:17:22 by juhur             #+#    #+#              #
-#    Updated: 2022/04/15 14:14:36 by juhur            ###   ########.fr        #
+#    Updated: 2022/04/16 14:29:06 by juhur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_DIR = ./src
 SRCS = $(addprefix $(SRC_DIR)/, \
 	main.c \
 	init.c \
-	routine.c \
+	philo.c \
 	util.c \
 	monitor.c \
 )
