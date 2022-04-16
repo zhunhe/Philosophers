@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 22:11:29 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 13:28:41 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ typedef enum s_status
 }	t_status;
 
 # define TAKEN_A_FORK	"\e[1;37m%lld	%d	has taken a fork 🥢\e[0m\n"
-# define EATING			"\e[1;47m\e[1;30m%lld	%d	is eating 🍝\e[0m\e[0m\n"
+# define EATING			"\e[1;47m\e[1;30m%lld	%d	is eating 🍝 \e[0m\e[0m\n"
 # define SLEEPING		"\e[1;34m%lld	%d	is sleeping 💤\e[0m\n"
 # define THINKING		"\e[1;33m%lld	%d	is thinking 🤔\e[0m\n"
-# define DIED			"\e[1;40m\e[1;31m%lld	%d	is died 💀\e[0m\e[0m\n"
-# define FULL			"\e[1;40m\e[1;37m%lld	All philosophers are full 🐷\e[0m\e[0m\n"
+# define DIED			"\e[1;40m\e[1;31m%lld	%d	is died 💀 \e[0m\e[0m\n"
+# define FULL			"\e[1;40m\e[1;37m%lld	All philosophers are full 🐷 \e[0m\e[0m\n"
 
 /*
 ** init.c
