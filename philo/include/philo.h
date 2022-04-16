@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 14:43:05 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 14:44:03 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,8 @@ void		newsleep(int64_t wait_time);
 ** monitor.c
 */
 void		*monitor(void *arg);
+/*
+** philo.c
+*/
+t_status	run_simulation(t_table *table);
 #endif

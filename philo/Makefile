@@ -6,7 +6,7 @@
 #    By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/08 14:17:22 by juhur             #+#    #+#              #
-#    Updated: 2022/04/16 14:29:06 by juhur            ###   ########.fr        #
+#    Updated: 2022/04/16 14:37:22 by juhur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 	philo.c \
 	util.c \
 	monitor.c \
+	simulation.c \
 )
 
 INC_DIR = ./include
