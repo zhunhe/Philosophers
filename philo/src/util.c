@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:58:16 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/15 14:33:38 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:00:21 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@
 int64_t	time_to_ms(struct timeval time)
 {
 	return ((int64_t)time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-bool	is_ended(t_cs *cs)
-{
-	bool	result;
-
-	result = false;
-	pthread_mutex_lock(&cs->mutex_end);
-	result = cs->end;
-	pthread_mutex_unlock(&cs->mutex_end);
-	return (result);
 }
 
 void	print_log(t_philo *p, char *action)

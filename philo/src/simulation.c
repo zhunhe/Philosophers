@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 14:51:51 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:00:25 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,15 @@ t_status	run_simulation(t_table *table)
 	while (++i < table->philo_count)
 		pthread_join(table->philo[i].thread, NULL);
 	return (table->status);
+}
+
+bool	is_ended(t_cs *cs)
+{
+	bool	result;
+
+	result = false;
+	pthread_mutex_lock(&cs->mutex_end);
+	result = cs->end;
+	pthread_mutex_unlock(&cs->mutex_end);
+	return (result);
 }
