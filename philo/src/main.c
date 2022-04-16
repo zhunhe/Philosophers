@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 14:36:39 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 16:25:07 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_status	check_argc(t_table *table, int argc)
 	return (table->status);
 }
 
-static void	destroy_mutex(t_table *table)
+static void	destory_free(t_table *table)
 {
 	int	i;
 
@@ -32,6 +32,7 @@ static void	destroy_mutex(t_table *table)
 		pthread_mutex_destroy(&table->philo[i].fork);
 		pthread_mutex_destroy(&table->philo[i].lock);
 	}
+	free(table->philo);
 }
 
 static int	quit_program(t_status status)
@@ -61,6 +62,6 @@ int	main(int argc, char **argv)
 		return (quit_program(table.status));
 	if (run_simulation(&table) != STATUS_OK)
 		return (quit_program(table.status));
-	destroy_mutex(&table);
+	destory_free(&table);
 	return (0);
 }
