@@ -6,12 +6,13 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 16:25:07 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 16:37:36 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <philo.h>
 
 static t_status	check_argc(t_table *table, int argc)
@@ -61,7 +62,10 @@ int	main(int argc, char **argv)
 	if (init(&table, argc, argv) != STATUS_OK)
 		return (quit_program(table.status));
 	if (run_simulation(&table) != STATUS_OK)
+	{
+		destory_free(&table);
 		return (quit_program(table.status));
+	}
 	destory_free(&table);
 	return (0);
 }
