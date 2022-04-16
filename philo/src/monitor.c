@@ -6,13 +6,24 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:05:47 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 18:19:51 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
 #include <philo.h>
+
+t_status	create_monitor(t_table *table)
+{
+	if (pthread_create(&table->monitor, NULL, monitor_routine, table))
+	{
+		stop_simulation(&table->cs);
+		return (STATUS_ERROR_CREATE_THREAD);
+	}
+	pthread_detach(table->monitor);
+	return (STATUS_OK);
+}
 
 static int	end_simulation(t_cs *cs, t_share *share, bool died, t_philo *p)
 {

@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:13:44 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 18:20:42 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef enum s_status
 /*
 ** init.c
 */
-t_status	init(t_table *table, int argc, char **argv);
+t_status	init(t_table *table);
 /*
 ** philo.c
 */
@@ -96,10 +96,12 @@ void		newsleep(int64_t wait_time);
 /*
 ** monitor.c
 */
+t_status	create_monitor(t_table *table);
 void		*monitor_routine(void *arg);
 /*
 ** simulation.c
 */
+void		stop_simulation(t_cs *cs);
 t_status	run_simulation(t_table *table);
 bool		is_ended(t_cs *cs);
 void		print_log(t_philo *p, char *action);

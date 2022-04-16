@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 18:06:41 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/16 18:19:36 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,6 @@ void	stop_simulation(t_cs *cs)
 	pthread_mutex_lock(&cs->mutex_end);
 	cs->end = true;
 	pthread_mutex_unlock(&cs->mutex_end);
-}
-
-static t_status	create_monitor(t_table *table)
-{
-	if (pthread_create(&table->monitor, NULL, monitor_routine, table))
-	{
-		stop_simulation(&table->cs);
-		return (STATUS_ERROR_CREATE_THREAD);
-	}
-	pthread_detach(table->monitor);
-	return (STATUS_OK);
 }
 
 static void	destroy_free(t_table *table)
