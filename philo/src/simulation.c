@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 18:19:36 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/18 16:54:17 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ static void	destroy_free(t_table *table)
 		pthread_mutex_destroy(&table->philo[i].fork);
 		pthread_mutex_destroy(&table->philo[i].lock);
 	}
-	free(table->philo);
+	if (table->philo)
+	{
+		free(table->philo);
+		table->philo = NULL;
+	}
 }
 
 t_status	run_simulation(t_table *table)

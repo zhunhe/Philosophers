@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 19:05:08 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/18 17:00:11 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string.h>
 #include <philo.h>
 
-static int	quit_program(t_status status)
+static int	quit_program(t_table *table)
 {
 	const char	*error_msg[STATUS_MAX] = {
 		"",
@@ -27,8 +27,17 @@ static int	quit_program(t_status status)
 		"Failed to create thread!",
 	};
 
-	printf("%s\n", error_msg[status]);
-	return (1);
+	if (table->philo != NULL)
+	{
+		free(table->philo);
+		table->philo = NULL;
+	}
+	if (table->status)
+	{
+		printf("%s\n", error_msg[table->status]);
+		return (1);
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -37,12 +46,12 @@ int	main(int argc, char **argv)
 
 	memset(&table, 0, sizeof(t_table));
 	if (check_argc(&table, argc) != STATUS_OK)
-		return (quit_program(table.status));
+		return (quit_program(&table));
 	if (check_argv(&table, argc, argv) != STATUS_OK)
-		return (quit_program(table.status));
+		return (quit_program(&table));
 	if (init(&table) != STATUS_OK)
-		return (quit_program(table.status));
+		return (quit_program(&table));
 	if (run_simulation(&table) != STATUS_OK)
-		return (quit_program(table.status));
-	return (0);
+		return (quit_program(&table));
+	return (quit_program(&table));
 }
