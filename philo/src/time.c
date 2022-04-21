@@ -6,14 +6,14 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:58:16 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 15:13:37 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/21 12:36:54 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <philo.h>
 
-int64_t	time_to_ms(struct timeval time)
+static int64_t	time_to_ms(struct timeval time)
 {
 	return ((int64_t)time.tv_sec * 1000 + time.tv_usec / 1000);
 }
