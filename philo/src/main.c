@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/21 11:40:51 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/21 18:53:45 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	main(int argc, char **argv)
 		return (quit_program(&table));
 	if (run_simulation(&table) != STATUS_OK)
 		return (quit_program(&table));
-	return (quit_program(&table));
+	return (0);
 }
