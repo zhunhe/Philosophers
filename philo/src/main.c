@@ -6,12 +6,13 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:25:39 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/18 17:00:11 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/21 11:40:51 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <philo.h>
 
 static int	quit_program(t_table *table)
