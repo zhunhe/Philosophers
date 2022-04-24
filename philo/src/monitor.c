@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 18:19:51 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/24 09:40:52 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,11 @@ t_status	create_monitor(t_table *table)
 
 static int	end_simulation(t_cs *cs, t_share *share, bool died, t_philo *p)
 {
-	pthread_mutex_lock(&cs->mutex_end);
+	stop_simulation(cs);
 	if (died)
-	{
 		printf(DIED, get_elapsed_time_in_ms(share), p->order);
-		put_down_fork(p);
-	}
 	else
 		printf(FULL, get_elapsed_time_in_ms(share));
-	cs->end = 1;
-	pthread_mutex_unlock(&cs->mutex_end);
 	return (1);
 }
 
