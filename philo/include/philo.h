@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/21 12:36:59 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/27 11:18:27 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_table
 	t_philo		*philo;
 }				t_table;
 
-typedef enum s_status
+typedef enum e_status
 {
 	STATUS_OK,
 	STATUS_ERROR_ARGC,
