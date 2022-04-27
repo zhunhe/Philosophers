@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/24 09:40:52 by juhur            ###   ########.fr       */
+/*   Updated: 2022/04/27 17:28:16 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static int	end_simulation(t_cs *cs, t_share *share, bool died, t_philo *p)
 {
 	stop_simulation(cs);
 	if (died)
+	{
 		printf(DIED, get_elapsed_time_in_ms(share), p->order);
+		put_down_fork(p);
+	}
 	else
 		printf(FULL, get_elapsed_time_in_ms(share));
 	return (1);
