@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:31:30 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:53:48 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,15 @@ typedef struct s_share
 	int			time_to_sleep;
 	int			must_eat_count;
 	int64_t		start_time;
-}				t_share;
-
-typedef struct s_cs
-{
 	t_mutex		mutex_end;
 	bool		end;
-}				t_cs;
+}				t_share;
 
 typedef struct s_philo
 {
 	pthread_t	thread;
 	int			order;
 	t_share		*share;
-	t_cs		*cs;
 	int64_t		last_meal_time;
 	int			meal_count;
 	t_mutex		*left_fork;
@@ -65,7 +60,6 @@ typedef struct s_table
 {
 	t_status	status;
 	t_share		share;
-	t_cs		cs;
 	int			full_philo_count;
 	int			philo_count;
 	pthread_t	monitor;
@@ -107,8 +101,8 @@ void		*monitor_routine(void *arg);
 /*
 ** simulation.c
 */
-void		stop_simulation(t_cs *cs);
+void		stop_simulation(t_share *share);
 t_status	run_simulation(t_table *table);
-bool		is_ended(t_cs *cs);
+bool		is_ended(t_share *share);
 void		print_log(t_philo *p, char *action);
 #endif

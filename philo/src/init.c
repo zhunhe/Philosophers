@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:42:38 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/16 18:13:02 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:54:07 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ static t_status	init_mutex(t_table *table)
 {
 	int		i;
 
-	if (pthread_mutex_init(&table->cs.mutex_end, NULL))
+	if (pthread_mutex_init(&table->share.mutex_end, NULL))
 		return (STATUS_ERROR_INIT_MUTEX);
 	i = -1;
 	while (++i < table->philo_count)
 	{
 		if (init_philo_mutex(&table->philo[i]) != STATUS_OK)
 		{
-			pthread_mutex_destroy(&table->cs.mutex_end);
+			pthread_mutex_destroy(&table->share.mutex_end);
 			while (i--)
 			{
 				pthread_mutex_destroy(&table->philo[i].fork);
@@ -60,7 +60,6 @@ static void	init_philo(t_table *table)
 		p->order = i + 1;
 		p->left_fork = &table->philo[i].fork;
 		p->right_fork = &table->philo[(i + 1) % table->philo_count].fork;
-		p->cs = &table->cs;
 		p->share = &table->share;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:32:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/17 23:55:57 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:54:15 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*philo_routine(void *arg)
 	p = (t_philo *)arg;
 	if (p->order & 1)
 		usleep(p->share->time_to_eat * 1000);
-	while (!is_ended(p->cs))
+	while (!is_ended(p->share))
 	{
 		take_fork(p);
 		eating(p);

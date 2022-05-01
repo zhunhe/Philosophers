@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/18 16:54:17 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:55:22 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 #include <stdlib.h>
 #include <philo.h>
 
-void	stop_simulation(t_cs *cs)
+void	stop_simulation(t_share *share)
 {
-	pthread_mutex_lock(&cs->mutex_end);
-	cs->end = true;
-	pthread_mutex_unlock(&cs->mutex_end);
+	pthread_mutex_lock(&share->mutex_end);
+	share->end = true;
+	pthread_mutex_unlock(&share->mutex_end);
 }
 
 static void	destroy_free(t_table *table)
 {
 	int	i;
 
-	pthread_mutex_destroy(&table->cs.mutex_end);
+	pthread_mutex_destroy(&table->share.mutex_end);
 	i = -1;
 	while (++i < table->philo_count)
 	{
@@ -51,7 +51,7 @@ t_status	run_simulation(t_table *table)
 		p = (t_philo *)&table->philo[i];
 		if (pthread_create(&p->thread, NULL, philo_routine, p))
 		{
-			stop_simulation(&table->cs);
+			stop_simulation(&table->share);
 			table->status = STATUS_ERROR_CREATE_THREAD;
 			break ;
 		}
@@ -64,20 +64,20 @@ t_status	run_simulation(t_table *table)
 	return (table->status);
 }
 
-bool	is_ended(t_cs *cs)
+bool	is_ended(t_share *share)
 {
 	bool	result;
 
-	pthread_mutex_lock(&cs->mutex_end);
-	result = cs->end;
-	pthread_mutex_unlock(&cs->mutex_end);
+	pthread_mutex_lock(&share->mutex_end);
+	result = share->end;
+	pthread_mutex_unlock(&share->mutex_end);
 	return (result);
 }
 
 void	print_log(t_philo *p, char *action)
 {
-	pthread_mutex_lock(&p->cs->mutex_end);
-	if (!p->cs->end)
+	pthread_mutex_lock(&p->share->mutex_end);
+	if (!p->share->end)
 		printf(action, get_elapsed_time_in_ms(p->share), p->order);
-	pthread_mutex_unlock(&p->cs->mutex_end);
+	pthread_mutex_unlock(&p->share->mutex_end);
 }

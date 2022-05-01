@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:01 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/27 17:28:16 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:54:48 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ t_status	create_monitor(t_table *table)
 {
 	if (pthread_create(&table->monitor, NULL, monitor_routine, table))
 	{
-		stop_simulation(&table->cs);
+		stop_simulation(&table->share);
 		return (STATUS_ERROR_CREATE_THREAD);
 	}
 	pthread_detach(table->monitor);
 	return (STATUS_OK);
 }
 
-static int	end_simulation(t_cs *cs, t_share *share, bool died, t_philo *p)
+static int	end_simulation(t_share *share, bool died, t_philo *p)
 {
-	stop_simulation(cs);
+	stop_simulation(share);
 	if (died)
 	{
 		printf(DIED, get_elapsed_time_in_ms(share), p->order);
@@ -62,7 +62,7 @@ static bool	check_simulation(t_table *table)
 			break ;
 	}
 	if (is_philo_died || all_philo_full)
-		return (end_simulation(&table->cs, &table->share, is_philo_died, p));
+		return (end_simulation(&table->share, is_philo_died, p));
 	return (0);
 }
 
