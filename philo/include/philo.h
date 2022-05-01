@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/04/27 11:18:27 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:31:30 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@
 # include <sys/time.h>
 
 typedef pthread_mutex_t	t_mutex;
+
+typedef enum e_status
+{
+	STATUS_OK,
+	STATUS_ERROR_ARGC,
+	STATUS_ERROR_INVALID_CHAR,
+	STATUS_ERROR_PHILO_COUNT,
+	STATUS_ERROR_MINUS,
+	STATUS_ERROR_MALLOC,
+	STATUS_ERROR_INIT_MUTEX,
+	STATUS_ERROR_CREATE_THREAD,
+	STATUS_MAX
+}	t_status;
 
 typedef struct s_share
 {
@@ -50,7 +63,7 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int			status;
+	t_status	status;
 	t_share		share;
 	t_cs		cs;
 	int			full_philo_count;
@@ -58,19 +71,6 @@ typedef struct s_table
 	pthread_t	monitor;
 	t_philo		*philo;
 }				t_table;
-
-typedef enum e_status
-{
-	STATUS_OK,
-	STATUS_ERROR_ARGC,
-	STATUS_ERROR_INVALID_CHAR,
-	STATUS_ERROR_PHILO_COUNT,
-	STATUS_ERROR_MINUS,
-	STATUS_ERROR_MALLOC,
-	STATUS_ERROR_INIT_MUTEX,
-	STATUS_ERROR_CREATE_THREAD,
-	STATUS_MAX
-}	t_status;
 
 # define TAKEN_A_FORK	"\e[1;37m%lld	%d	has taken a fork 🥢\e[0m\n"
 # define EATING			"\e[1;47m\e[1;30m%lld	%d	is eating 🍝 \e[0m\e[0m\n"
