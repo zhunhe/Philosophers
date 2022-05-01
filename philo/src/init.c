@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:42:38 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:54:07 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:59:05 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 static t_status	init_philo_mutex(t_philo *p)
 {
-	if (pthread_mutex_init(&p->fork, NULL))
+	if (pthread_mutex_init(&p->left_fork, NULL))
 		return (STATUS_ERROR_INIT_MUTEX);
 	if (pthread_mutex_init(&p->lock, NULL))
 	{
-		pthread_mutex_destroy(&p->fork);
+		pthread_mutex_destroy(&p->left_fork);
 		return (STATUS_ERROR_INIT_MUTEX);
 	}
 	return (STATUS_OK);
@@ -39,7 +39,7 @@ static t_status	init_mutex(t_table *table)
 			pthread_mutex_destroy(&table->share.mutex_end);
 			while (i--)
 			{
-				pthread_mutex_destroy(&table->philo[i].fork);
+				pthread_mutex_destroy(&table->philo[i].left_fork);
 				pthread_mutex_destroy(&table->philo[i].lock);
 			}
 			return (STATUS_ERROR_INIT_MUTEX);
@@ -58,8 +58,7 @@ static void	init_philo(t_table *table)
 	{
 		p = (t_philo *)&table->philo[i];
 		p->order = i + 1;
-		p->left_fork = &table->philo[i].fork;
-		p->right_fork = &table->philo[(i + 1) % table->philo_count].fork;
+		p->right_fork = &table->philo[(i + 1) % table->philo_count].left_fork;
 		p->share = &table->share;
 	}
 }

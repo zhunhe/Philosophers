@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:53:48 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:58:32 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ typedef struct s_philo
 	t_share		*share;
 	int64_t		last_meal_time;
 	int			meal_count;
-	t_mutex		*left_fork;
+	t_mutex		left_fork;
 	t_mutex		*right_fork;
-	t_mutex		fork;
 	t_mutex		lock;
 }				t_philo;
 

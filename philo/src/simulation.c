@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:55:22 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 13:59:24 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	destroy_free(t_table *table)
 	i = -1;
 	while (++i < table->philo_count)
 	{
-		pthread_mutex_destroy(&table->philo[i].fork);
+		pthread_mutex_destroy(&table->philo[i].left_fork);
 		pthread_mutex_destroy(&table->philo[i].lock);
 	}
 	if (table->philo)
