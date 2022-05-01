@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:42:38 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:59:05 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/01 14:02:46 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ static void	init_philo(t_table *table)
 	{
 		p = (t_philo *)&table->philo[i];
 		p->order = i + 1;
-		p->right_fork = &table->philo[(i + 1) % table->philo_count].left_fork;
 		p->share = &table->share;
+		p->last_meal_time = 0LL;
+		p->meal_count = 0;
+		p->right_fork = &table->philo[(i + 1) % table->philo_count].left_fork;
 	}
 }
 
