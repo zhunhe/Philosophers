@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:32:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:59:17 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/02 01:38:37 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,15 @@ void	*philo_routine(void *arg)
 	p = (t_philo *)arg;
 	if (p->order & 1)
 		usleep(p->share->time_to_eat * 1000);
-	while (!is_ended(p->share))
+	while (1)
 	{
+		pthread_mutex_lock(&p->share->mutex_end);
+		if (p->share->end)
+		{
+			pthread_mutex_unlock(&p->share->mutex_end);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&p->share->mutex_end);
 		take_fork(p);
 		eating(p);
 		sleeping_thinking(p);

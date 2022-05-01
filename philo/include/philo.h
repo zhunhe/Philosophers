@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:58:32 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/02 01:26:18 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,5 @@ void		*monitor_routine(void *arg);
 */
 void		stop_simulation(t_share *share);
 t_status	run_simulation(t_table *table);
-bool		is_ended(t_share *share);
 void		print_log(t_philo *p, char *action);
 #endif

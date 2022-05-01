@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/01 13:59:24 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/02 01:39:08 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,6 @@ t_status	run_simulation(t_table *table)
 		pthread_join(table->philo[i].thread, NULL);
 	destroy_free(table);
 	return (table->status);
-}
-
-bool	is_ended(t_share *share)
-{
-	bool	result;
-
-	pthread_mutex_lock(&share->mutex_end);
-	result = share->end;
-	pthread_mutex_unlock(&share->mutex_end);
-	return (result);
 }
 
 void	print_log(t_philo *p, char *action)
