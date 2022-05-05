@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 14:36:42 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/02 01:39:08 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/05 22:47:38 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_status	run_simulation(t_table *table)
 		}
 	}
 	if (table->status == STATUS_OK)
-		table->status = create_monitor(table);
+		monitor_routine(table);
 	while (i--)
 		pthread_join(table->philo[i].thread, NULL);
 	destroy_free(table);

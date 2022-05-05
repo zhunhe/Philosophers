@@ -6,7 +6,7 @@
 /*   By: juhur <juhur@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 14:01:05 by juhur             #+#    #+#             */
-/*   Updated: 2022/05/02 01:26:18 by juhur            ###   ########.fr       */
+/*   Updated: 2022/05/05 22:56:16 by juhur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_table
 	t_share		share;
 	int			full_philo_count;
 	int			philo_count;
-	pthread_t	monitor;
 	t_philo		*philo;
 }				t_table;
 
@@ -95,8 +94,7 @@ void		newsleep(int64_t wait_time);
 /*
 ** monitor.c
 */
-t_status	create_monitor(t_table *table);
-void		*monitor_routine(void *arg);
+void		monitor_routine(t_table *table);
 /*
 ** simulation.c
 */
